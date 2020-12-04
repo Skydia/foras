@@ -19,6 +19,9 @@ def index():
 
     return render_template("index.html", script=script, template="Flask", index=index)
 
+@app.route('/about-us')
+def about_us():
+    return render_template("about-us.html", template="Flask")
 
 if __name__ == '__main__':
     # runs app in debug mode
