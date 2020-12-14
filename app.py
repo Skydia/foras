@@ -6,16 +6,19 @@ from flask import send_from_directory
 app = Flask(__name__)
 
 
-#BOKEH_URL = "http://127.0.0.1:5006/holoviews_app"
-BOKEH_URL = "https://forasdashboard.herokuapp.com/holoviews_app"
+BOKEH_URL = "http://127.0.0.1:5006/holoviews_app"
+#BOKEH_URL = "https://forasdashboard.herokuapp.com/holoviews_app"
 
 # locally creates a page
-@app.route('/')
+@app.route('/',methods=["POST","GET"])
 def index():
     index = "home"
-    with pull_session(url=BOKEH_URL) as session:
-            # generate a script to load the customized session
-            script = server_session(session_id=session.id, url=BOKEH_URL)
+    try:
+        with pull_session(url=BOKEH_URL) as session:
+                # generate a script to load the customized session
+                script = server_session(session_id=session.id, url=BOKEH_URL)
+    except:
+        script = "Dashboard error. For alternative, please access https://forasdashboard.herokuapp.com/holoviews_app"
 
     return render_template("index.html", script=script, template="Flask", index=index)
 
